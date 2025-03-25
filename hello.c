@@ -157,4 +157,25 @@ void BSearchAll2(int arr[], int n, int key, int *first, int *last, int *comparis
 }
 
 int main() {
-    int
+    int arr[] = {1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 4;
+    
+    int first1, last1, comp1;
+    int first2, last2, comp2;
+    
+    BSearchAll1(arr, n, key, &first1, &last1, &comp1);
+    BSearchAll2(arr, n, key, &first2, &last2, &comp2);
+    
+    printf("Версия 1:\n");
+    printf("Первое вхождение: %d\n", first1);
+    printf("Последнее вхождение: %d\n", last1);
+    printf("Количество сравнений: %d\n", comp1);
+    
+    printf("\nВерсия 2:\n");
+    printf("Первое вхождение: %d\n", first2);
+    printf("Последнее вхождение: %d\n", last2);
+    printf("Количество сравнений: %d\n", comp2);
+    
+    return 0;
+}
