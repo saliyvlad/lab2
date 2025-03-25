@@ -52,8 +52,109 @@ if [ -z "$file" ]; then
     exit 1
 fi
 
+
+
+
+
 # Замена знаков пунктуации на '#'
 new_file="${file%.txt}.UP"  # Предполагается, что файл имеет расширение .txt
 tr -c '[:alnum:][:space:]' '#' < "$file" > "$new_file"
 
 echo "Преобразованный файл сохранен как $new_file."
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+
+// Версия 1: Поиск первого и последнего вхождения отдельно
+void BSearchAll1(int arr[], int n, int key, int *first, int *last, int *comparisons) {
+    *comparisons = 0;
+    int low = 0, high = n - 1;
+    *first = -1;
+    
+    // Поиск первого вхождения
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        (*comparisons)++;
+        
+        if (arr[mid] >= key) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    
+    if (low < n && arr[low] == key) {
+        *first = low;
+    } else {
+        *first = -1;
+        *last = -1;
+        return;
+    }
+    
+    // Поиск последнего вхождения
+    low = 0;
+    high = n - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        (*comparisons)++;
+        
+        if (arr[mid] <= key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    
+    *last = high;
+}
+
+// Версия 2: Оптимизированный поиск всех вхождений
+void BSearchAll2(int arr[], int n, int key, int *first, int *last, int *comparisons) {
+    *comparisons = 0;
+    *first = -1;
+    *last = -1;
+    
+    int low = 0, high = n - 1;
+    
+    // Поиск первого вхождения
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        (*comparisons)++;
+        
+        if (arr[mid] >= key) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    
+    if (low >= n || arr[low] != key) {
+        return;
+    }
+    *first = low;
+    
+    // Поиск последнего вхождения
+    high = n - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        (*comparisons)++;
+        
+        if (arr[mid] <= key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    
+    *last = high;
+}
+
+int main() {
+    int
